@@ -12,6 +12,20 @@ function createServer() {
 
     const searchParams = url.searchParams;
 
+    if (req.url.includes('..')) {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('Invalid path');
+
+      return;
+    }
+
+    if (pathname.includes('//')) {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      res.end('Not Found');
+
+      return;
+    }
+
     if (pathname.length > 0 || searchParams.size > 0) {
       res.writeHead(200, { 'Content-Type': 'application/json' });
 
